@@ -1,0 +1,55 @@
+# Estimation library — the deterministic source of every duration in the schedule.
+#
+# The LLM never invents a number of days. In stage 3 (decompose) it only chooses an
+# archetype key from this file; the actual `estimate_days` on each WorkItem is a
+# lookup here. This is what makes the schedule reproducible and defensible under
+# panel scrutiny.
+#
+# `unit_size` archetypes drive the fan-out rule (master plan §7):
+#     n_batches = ceil(scope_item.quantity / archetype.unit_size)
+#
+# Numbers here are calibrated assumptions for a loyalty-program delivery. In
+# production these are re-fitted quarterly from historical actuals.
+
+technical:
+  user_story_simple:      { base_days: 2,   role: Backend Engineer }
+  user_story_medium:      { base_days: 5,   role: Backend Engineer }
+  user_story_complex:     { base_days: 8,   role: Backend Engineer }
+  api_integration:        { base_days: 6,   role: Backend Engineer }
+  sdk_integration:        { base_days: 8,   role: Mobile Engineer }
+  admin_portal_screen:    { base_days: 3,   role: Backend Engineer }
+  test_case_authoring:    { base_days: 0.5, role: QA Engineer }
+  tech_validation:        { base_days: 1,   role: Tech Lead }
+  uat_cycle:              { base_days: 5,   role: QA Engineer }
+
+commercial:
+  merchant_acquisition_batch:
+    base_days: 10
+    unit_size: 50            # 50 merchants per acquisition batch
+    role: Merchant Acquisition Specialist
+  offer_negotiation_batch:
+    base_days: 5
+    unit_size: 20            # 20 offers per negotiation batch
+    role: Commercial Manager
+  anchor_partner_deal:
+    base_days: 15
+    role: Commercial Manager
+
+operations:
+  system_configuration:     { base_days: 4, role: Ops Engineer }
+  pos_setup_per_region:     { base_days: 3, role: Field Ops Lead }
+  merchant_training_wave:
+    base_days: 5
+    unit_size: 40            # 40 merchants per training wave
+    role: Field Ops Lead
+  merchant_onboarding_wave:
+    base_days: 4
+    unit_size: 40            # 40 merchants per onboarding wave
+    role: Onboarding Specialist
+  support_playbook:         { base_days: 3, role: Ops Engineer }
+
+design:
+  wireframes:               { base_days: 4, role: Product Designer }
+  hi_fi_screens:            { base_days: 6, role: Product Designer }
+  design_system:            { base_days: 5, role: Product Designer }
+  design_qa:                { base_days: 2, role: Product Designer }

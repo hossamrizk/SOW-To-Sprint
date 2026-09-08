@@ -1,0 +1,53 @@
+technical:
+  default_children:
+    - { type: epic,            archetype: user_story_complex,   count: 1,          phase: Discovery }
+    - { type: user_story,      archetype: user_story_medium,    count: variable,   phase: Build }
+    - { type: test_case,       archetype: test_case_authoring,  per: user_story,   phase: Build }
+    - { type: tech_validation, archetype: tech_validation,      count: 1,          phase: Build }
+    - { type: uat_cycle,       archetype: uat_cycle,            count: 1,          phase: UAT }
+  dependency_rules:
+    - { from: user_story,      depends_on: [epic] }
+    - { from: test_case,       depends_on: [user_story] }
+    - { from: tech_validation, depends_on: [test_case] }
+    - { from: uat_cycle,       depends_on: [tech_validation] }
+
+commercial:
+  fanout_rules:
+    - { unit: merchants, archetype: merchant_acquisition_batch, phase: Build }
+    - { unit: offers,    archetype: offer_negotiation_batch,    phase: Build }
+    - { unit: partners,  archetype: anchor_partner_deal,        phase: Discovery }
+  default_children:
+    - { type: commercial_task, archetype: anchor_partner_deal,  count: variable,   phase: Discovery }
+  dependency_rules:
+    - { from: merchant_acquisition_batch, depends_on: [anchor_partner_deal] }
+
+operations:
+  fanout_rules:
+    - { unit: regions,   archetype: pos_setup_per_region,                            phase: Build }
+    - { unit: merchants, keyword: training,   archetype: merchant_training_wave,     phase: Launch }
+    - { unit: merchants, keyword: onboarding, archetype: merchant_onboarding_wave,   phase: Launch }
+  default_children:
+    - { type: ops_task, archetype: system_configuration, count: 1, phase: Build }
+    - { type: ops_task, archetype: support_playbook,     count: 1, phase: Launch }
+  dependency_rules:
+    - { from: merchant_training_wave,  depends_on: [merchant_acquisition_batch] }
+    - { from: merchant_onboarding_wave, depends_on: [merchant_training_wave] }
+    - { from: pos_setup_per_region,     depends_on: [system_configuration] }
+
+design:
+  default_children:
+    - { type: design_task, archetype: wireframes,     count: 1, phase: Discovery }
+    - { type: design_task, archetype: hi_fi_screens,  count: 1, phase: Build }
+    - { type: design_task, archetype: design_system,  count: 1, phase: Build }
+    - { type: design_task, archetype: design_qa,      count: 1, phase: UAT }
+  dependency_rules:
+    - { from: hi_fi_screens, depends_on: [wireframes] }
+    - { from: design_qa,     depends_on: [hi_fi_screens] }
+
+# Cross-function gates — applied by the scheduler, not the LLM.
+# These are the "obvious" edges of any delivery: technical must exist before
+# commercial can onboard against it, training must precede launch, etc.
+global_dependency_rules:
+  - { from_phase: Build,  depends_on_phase: Discovery }
+  - { from_phase: UAT,    depends_on_phase: Build }
+  - { from_phase: Launch, depends_on_phase: UAT }
