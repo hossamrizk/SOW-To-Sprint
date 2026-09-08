@@ -1,18 +1,3 @@
-# Working calendar for the back-scheduler (stage 4).
-#
-# Egyptian delivery calendar:
-#   - Weekend: Friday + Saturday (not Sat+Sun — this is the point of a local calendar).
-#   - Public holidays: full list for 2026.
-#
-# The scheduler counts working days only, skipping anything listed here. The
-# `date` field on every WorkItem lands on a real working day. If the go-live
-# date itself falls on a weekend/holiday, the scheduler will refuse to schedule
-# on that date and fail loudly — that's a real error, not something to paper over.
-#
-# Note on Islamic-calendar holidays: dates below use the widely-published 2026
-# Egypt observed dates. In production these come from an authoritative service
-# (they can shift ±1 day at short notice on moon-sighting).
-
 weekend:
   - Friday
   - Saturday

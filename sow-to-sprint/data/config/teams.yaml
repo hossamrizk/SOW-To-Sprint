@@ -1,15 +1,3 @@
-# Teams — squads and named people the scheduler uses for assignment.
-#
-# `assignment_rule: round_robin_by_role` (master plan §8):
-#   - Each WorkItem carries a `role` (looked up from estimation_library archetype).
-#   - Assign the next available person with that role, round-robin.
-#   - Squad ownership by module is respected first: a technical WorkItem whose
-#     scope item is in module "Points Engine" is assigned within the squad that
-#     lists "Points Engine" under its `modules`.
-#
-# Names are fictional (demo dataset). In production this comes from the org
-# directory or HR system.
-
 squads:
   - name: "Squad A — Loyalty Core"
     modules: ["Points Engine", "Redemption Catalog"]
@@ -35,8 +23,6 @@ squads:
       - { name: "Ali Mostafa",   role: "Backend Engineer" }
       - { name: "Passant Ehab",  role: "QA Engineer" }
 
-# QA pool — used when a WorkItem needs QA capacity outside a specific squad
-# (e.g. cross-cutting UAT cycles).
 qa_pool:
   - { name: "Nour Sameh",   role: "QA Engineer" }
   - { name: "Rana Kamel",   role: "QA Engineer" }

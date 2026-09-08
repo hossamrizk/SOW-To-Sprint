@@ -44,9 +44,7 @@ design:
     - { from: hi_fi_screens, depends_on: [wireframes] }
     - { from: design_qa,     depends_on: [hi_fi_screens] }
 
-# Cross-function gates — applied by the scheduler, not the LLM.
-# These are the "obvious" edges of any delivery: technical must exist before
-# commercial can onboard against it, training must precede launch, etc.
+
 global_dependency_rules:
   - { from_phase: Build,  depends_on_phase: Discovery }
   - { from_phase: UAT,    depends_on_phase: Build }

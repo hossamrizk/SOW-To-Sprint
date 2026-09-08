@@ -1,16 +1,3 @@
-# Estimation library — the deterministic source of every duration in the schedule.
-#
-# The LLM never invents a number of days. In stage 3 (decompose) it only chooses an
-# archetype key from this file; the actual `estimate_days` on each WorkItem is a
-# lookup here. This is what makes the schedule reproducible and defensible under
-# panel scrutiny.
-#
-# `unit_size` archetypes drive the fan-out rule (master plan §7):
-#     n_batches = ceil(scope_item.quantity / archetype.unit_size)
-#
-# Numbers here are calibrated assumptions for a loyalty-program delivery. In
-# production these are re-fitted quarterly from historical actuals.
-
 technical:
   user_story_simple:      { base_days: 2,   role: Backend Engineer }
   user_story_medium:      { base_days: 5,   role: Backend Engineer }
