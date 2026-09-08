@@ -4,7 +4,6 @@
 project board — with a human approval gate and full traceability back to
 the contract.**
 
-Built as the demo for Dsquares' AI Transformation Specialist evaluation.
 
 ---
 
@@ -39,8 +38,6 @@ nothing gets written to any downstream tool until the PM has approved it.
     (5) REVIEW GATE →  Streamlit UI — PM approves / edits / rejects
                     ▼
     (6) TRELLO SYNC →  boards per function, idempotent re-runs
-                    ▼
-    (7) CR DIFF     →  v2 SOW → diff report → apply to Trello (no duplicates)
 ```
 
 Six stages of pipeline; the fifth is the human. Nothing writes to Trello
